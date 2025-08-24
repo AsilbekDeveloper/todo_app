@@ -58,7 +58,9 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          tasking.deleteTask(task.tasks[index].taskId);
+                        },
                         icon: Icon(
                           CupertinoIcons.delete,
                           color: AppColors.primaryLight,
