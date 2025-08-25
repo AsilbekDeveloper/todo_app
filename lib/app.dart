@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_app/view/home_page.dart';
+import 'package:todo_app/view/bottom_nav_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Jost',
         ),
-        home: HomePage(),
+        home: BottomNavBar(),
       ),
     );
   }
