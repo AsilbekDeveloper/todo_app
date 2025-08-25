@@ -6,46 +6,42 @@ class TaskController extends ChangeNotifier {
   Box<TaskModel>? _taskBox;
 
   TaskController() {
-    init();
+    _init();
   }
 
-  Future<void> init() async {
+  Future<void> _init() async {
     _taskBox = await Hive.openBox<TaskModel>('tasks');
     notifyListeners();
   }
 
-  List<TaskModel> get tasks {
-    if (_taskBox != null) {
-      return _taskBox!.values.toList();
-    } else {
-      return [];
-    }
-  }
+  List<TaskModel> get tasks => _taskBox?.values.toList() ?? [];
+
+  List<TaskModel> get completedTasks =>
+      _taskBox?.values.where((t) => t.isDone).toList() ?? [];
 
   Future<void> addTask(TaskModel task) async {
-    await _taskBox?.put(task.taskId, task);
+    await _taskBox?.put(task.taskId.toString(), task);
     notifyListeners();
   }
 
-  Future<void> deleteTask(int taskId) async {
-    await _taskBox?.delete(taskId);
-    notifyListeners();
-  }
-
-  Future<void> toggleTaskStatus(int taskId) async {
-    final task = _taskBox?.get(taskId);
-    if(task != null) {
-      task.isDone = !task.isDone;
-      await _taskBox?.put(taskId, task);
+  Future<void> editTask(TaskModel task) async {
+    if (_taskBox?.containsKey(task.taskId.toString()) ?? false) {
+      await _taskBox?.put(task.taskId.toString(), task);
       notifyListeners();
     }
   }
 
-  List<TaskModel> get completedTasks {
-    if(_taskBox != null) {
-      return _taskBox!.values.where((task) => task.isDone).toList();
-    } else {
-      return [];
+  Future<void> deleteTask(String taskId) async {
+    await _taskBox?.delete(taskId);
+    notifyListeners();
+  }
+
+  Future<void> toggleTaskStatus(String taskId) async {
+    final task = _taskBox?.get(taskId);
+    if (task != null) {
+      task.isDone = !task.isDone;
+      await _taskBox?.put(taskId, task);
+      notifyListeners();
     }
   }
 }
