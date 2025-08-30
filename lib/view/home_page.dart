@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       body: taskController.tasks.isEmpty
           ? Center(
               child: Text(
-                "Hozircha hech qanday vazifa yo'q",
+                "No tasks",
                 style: TextStyle(fontSize: 20.sp, color: AppColors.secondary),
               ),
             )
