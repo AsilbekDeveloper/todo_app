@@ -14,10 +14,15 @@ class TaskController extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<TaskModel> get tasks => _taskBox?.values.toList() ?? [];
+  List<TaskModel> get tasks {
+    if (_taskBox == null) return [];
+    return List.unmodifiable(_taskBox!.values);
+  }
 
-  List<TaskModel> get completedTasks =>
-      _taskBox?.values.where((t) => t.isDone).toList() ?? [];
+  List<TaskModel> get completedTasks {
+    if (_taskBox == null) return [];
+    return List.unmodifiable(_taskBox!.values.where((t) => t.isDone));
+  }
 
   Future<void> addTask(TaskModel task) async {
     await _taskBox?.put(task.taskId.toString(), task);
