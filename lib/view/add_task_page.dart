@@ -19,8 +19,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   @override
   void initState() {
     super.initState();
-    titleController;
-    subTitleController;
   }
 
   @override
@@ -28,6 +26,20 @@ class _AddTaskPageState extends State<AddTaskPage> {
     titleController.dispose();
     subTitleController.dispose();
     super.dispose();
+  }
+
+  void _addButton() {
+    final title = titleController.text.trim();
+    final subTitle = subTitleController.text.trim();
+    context.read<TaskController>().addTask(
+      TaskModel(
+        title: title,
+        subTitle: subTitle,
+        isDone: false,
+        taskId: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -42,14 +54,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
         title: Text(
           "Add Task",
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.w600,
             color: AppColors.secondary,
           ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
         child: Column(
           children: [
             TextField(
@@ -57,25 +69,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
               decoration: InputDecoration(
                 label: Text("Title"),
                 labelStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.unSelected,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
             TextField(
               controller: subTitleController,
               decoration: InputDecoration(
                 label: Text("Detail"),
                 labelStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.unSelected,
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 50.h),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 65.h),
@@ -84,23 +96,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              onPressed: () {
-                final title = titleController.text.trim();
-                final subTitle = subTitleController.text.trim();
-                context.read<TaskController>().addTask(
-                  TaskModel(
-                    title: title,
-                    subTitle: subTitle,
-                    isDone: false,
-                    taskId: DateTime.now().millisecondsSinceEpoch,
-                  ),
-                );
-                Navigator.pop(context);
-              },
+              onPressed: _addButton,
               child: Text(
                 "ADD",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.secondary,
                 ),
