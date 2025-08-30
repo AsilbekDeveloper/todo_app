@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todo_app/app.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/controller/bottom_nav_controller.dart';
 import 'package:todo_app/controller/task_controller.dart';
 import 'package:todo_app/model/task_model.dart';
 
@@ -13,7 +14,10 @@ void main() async {
   }
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => TaskController())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => TaskController()),
+        ChangeNotifierProvider(create: (_) => BottomNavController()),
+      ],
       child: const MyApp(),
     ),
   );
