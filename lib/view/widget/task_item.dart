@@ -20,7 +20,10 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cardColor = task.isDone ? Colors.grey.shade300 : Colors.white;
+
     return Card(
+      color: cardColor,
       margin: EdgeInsets.only(bottom: 21.h),
       elevation: 4.w,
       child: Padding(
@@ -62,8 +65,11 @@ class TaskItem extends StatelessWidget {
               ),
               IconButton(
                 onPressed: onToggle,
-                icon: const Icon(
-                  CupertinoIcons.check_mark_circled,
+                icon: Icon(
+                  task.isDone
+                      ? CupertinoIcons
+                            .check_mark_circled_solid // filled icon
+                      : CupertinoIcons.check_mark_circled,
                   color: AppColors.primaryLight,
                 ),
               ),
